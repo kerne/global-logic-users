@@ -13,46 +13,44 @@ import com.globallogic.users.entity.UserEntity;
 import com.globallogic.users.model.User;
 import com.globallogic.users.repository.UserRepository;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service
+@Slf4j
 public class UserService {
 
 	@Autowired
 	UserRepository repository;
 
 	public Object add(User user) {
-		
+		log.info("SAVING USER");
 		List<PhoneEntity> phones = new ArrayList<PhoneEntity>();
-		if(user.getPhones() != null) {
+		if (user.getPhones() != null) {
 			phones = user.getPhones().stream().map(e -> {
-				return PhoneEntity.builder()
-							.number(e.getNumber())
-							.cityCode(e.getCityCode())
-							.countryCode(e.getCountryCode())
-							.build();
+				return PhoneEntity.builder().number(e.getNumber()).cityCode(e.getCityCode())
+						.countryCode(e.getCountryCode()).build();
 			}).collect(Collectors.toList());
-			
+
 		}
 
-		UserEntity entity = UserEntity.builder()
-									.name(user.getName())
-									.email(user.getEmail())
-									.password(user.getPassword())
-									.phones(phones)
-									.build();
+		UserEntity entity = UserEntity.builder().name(user.getName()).email(user.getEmail())
+				.password(user.getPassword()).phones(phones).build();
 
 		return repository.save(entity);
 	}
 
 	public Optional<UserEntity> get(Integer id) {
+		log.info("FINDING USER BY ID ");
 		return repository.findById(id);
 	}
 
 	public List<UserEntity> getAll() {
+		log.info("FINDING ALL USERS");
 		return repository.findAll();
 	}
 
 	public Optional<UserEntity> update(User user, Integer id) {
-
+		log.info("UPDATING USER BY ID");
 		Optional<UserEntity> opUser = repository.findById(id);
 
 		if (!opUser.isPresent()) {
@@ -68,7 +66,7 @@ public class UserService {
 					.getPhones().stream().map(e -> PhoneEntity.builder().cityCode(e.getCityCode())
 							.countryCode(e.getCountryCode()).number(e.getNumber()).build())
 					.collect(Collectors.toList());
-			
+
 		}
 		entity.setPhones(phoneEntities);
 
@@ -77,11 +75,14 @@ public class UserService {
 	}
 
 	public boolean delete(Integer id) {
+		log.info("FINDING USER BY ID ");
 		Optional<UserEntity> opUser = repository.findById(id);
 		if (opUser.isPresent()) {
+			log.info("DELETING USER BY ID ");
 			repository.deleteById(id);
 			return true;
 		}
+		log.info("CAN'T NOT DELETE USER BY ID ");
 		return false;
 	}
 
