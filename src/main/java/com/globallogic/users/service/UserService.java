@@ -20,14 +20,25 @@ public class UserService {
 	UserRepository repository;
 
 	public Object add(User user) {
+		
+		List<PhoneEntity> phones = new ArrayList<PhoneEntity>();
+		if(user.getPhones() != null) {
+			phones = user.getPhones().stream().map(e -> {
+				return PhoneEntity.builder()
+							.number(e.getNumber())
+							.cityCode(e.getCityCode())
+							.countryCode(e.getCountryCode())
+							.build();
+			}).collect(Collectors.toList());
+			
+		}
 
-		List<PhoneEntity> phones = user.getPhones().stream().map(e -> {
-			return PhoneEntity.builder().number(e.getNumber()).cityCode(e.getCityCode()).countryCode(e.getCountryCode())
-					.build();
-		}).collect(Collectors.toList());
-
-		UserEntity entity = UserEntity.builder().name(user.getName()).email(user.getEmail())
-				.password(user.getPassword()).phones(phones).build();
+		UserEntity entity = UserEntity.builder()
+									.name(user.getName())
+									.email(user.getEmail())
+									.password(user.getPassword())
+									.phones(phones)
+									.build();
 
 		return repository.save(entity);
 	}

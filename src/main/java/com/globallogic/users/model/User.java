@@ -3,6 +3,7 @@
  */
 package com.globallogic.users.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +17,12 @@ import lombok.Data;
  *
  */
 @Data
-public class User {
+public class User implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 763767448111123416L;
 
 	private String name;
 
