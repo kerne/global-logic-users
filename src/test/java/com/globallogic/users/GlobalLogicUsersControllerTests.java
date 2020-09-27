@@ -8,24 +8,18 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.util.MimeTypeUtils;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.globallogic.users.controller.UsersController;
 import com.globallogic.users.model.UserMock;
-import com.globallogic.users.service.UserService;
 
 @ActiveProfiles("test")
 @RunWith(SpringRunner.class)
@@ -92,10 +86,6 @@ public class GlobalLogicUsersControllerTests {
 
 	@Test
 	public void testModifyEmail() throws Exception {
-		
-		UserService service = Mockito.mock(UserService.class);
-		
-		Mockito.when(service.update(Mockito.any(), Mockito.anyInt())).thenReturn(UserMock.getUserEntity());
 		
 		mockMvc
 		.perform(
