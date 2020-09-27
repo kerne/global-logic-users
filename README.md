@@ -6,7 +6,12 @@ PRUEBA TECNICA - API REST
 
 git clone https://github.com/kerne/global-logic-users
 
-#DOCUMENTACIÓN ENDPOINT
+#DOCUMENTACIÓN ENDPOINT - SWAGGER
+
 https://global-logic-users.herokuapp.com/global-logic-test/swagger-ui.html#/
 
+
+## CORRER APLICACIÓN
+
+gradle bootRun
 

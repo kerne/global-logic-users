@@ -39,7 +39,11 @@ public class UsersController {
 
 	@PostMapping(value = "/", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseEntity<Object> add(@Validated @RequestBody User user) throws Exception {
-		return ResponseEntity.ok(service.add(user));
+		try {
+			return ResponseEntity.ok(service.add(user));
+		} catch (Exception e) {
+			return ResponseEntity.ok(Response.builder().message(e.getMessage()));
+		}
 	}
 
 	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
