@@ -6,10 +6,12 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.globallogic.users.entity.PhoneEntity;
 import com.globallogic.users.entity.UserEntity;
+import com.globallogic.users.exception.GLogicException;
 import com.globallogic.users.model.User;
 import com.globallogic.users.repository.UserRepository;
 
@@ -22,7 +24,12 @@ public class UserService {
 	@Autowired
 	UserRepository repository;
 
-	public Object add(User user) {
+	public Object add(User user) throws Exception {
+
+		Optional<UserEntity> userEmail = repository.findByEmail(user.getEmail());
+		if (userEmail.isPresent()) {
+			throw new GLogicException(HttpStatus.FOUND, "El correo ya registrado");
+		}
 		log.info("SAVING USER");
 		List<PhoneEntity> phones = new ArrayList<PhoneEntity>();
 		if (user.getPhones() != null) {

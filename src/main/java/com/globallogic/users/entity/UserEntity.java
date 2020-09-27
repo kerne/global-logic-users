@@ -27,7 +27,7 @@ import lombok.NoArgsConstructor;
  * @author kerne
  *
  */
-@Table(name = "User")
+@Table(name = "UserEntity")
 @Entity
 @Data
 @Builder

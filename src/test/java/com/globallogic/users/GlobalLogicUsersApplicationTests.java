@@ -30,7 +30,7 @@ public class GlobalLogicUsersApplicationTests {
 	UserService service;
 
 	@Test
-	public void testAdd() {
+	public void testAdd() throws Exception {
 
 		Mockito.when(repository.save(Mockito.any())).thenReturn(UserMock.getUserEntity().get());
 

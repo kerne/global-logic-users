@@ -2,6 +2,7 @@ package com.globallogic.users.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+
 @Component
 public class GLogicException extends RuntimeException {
 
@@ -21,6 +22,10 @@ public class GLogicException extends RuntimeException {
 	public GLogicException(HttpStatus status, String message) {
 		super();
 		this.status = status;
+		this.message = message;
+	}
+
+	public GLogicException(String message) {
 		this.message = message;
 	}
 
