@@ -29,14 +29,13 @@ import com.globallogic.users.service.UserService;
  *
  */
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api/v1")
 public class UsersController {
 
 	@Autowired
 	UserService service;
 
 	@PostMapping(value = "/", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	
 	public ResponseEntity<Object> add(@Validated @RequestBody User user) {
 		return ResponseEntity.ok(service.add(user));
 
