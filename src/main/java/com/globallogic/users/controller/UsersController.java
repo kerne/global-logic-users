@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.globallogic.users.entity.UserEntity;
+import com.globallogic.users.exception.GLogicException;
 import com.globallogic.users.model.Response;
 import com.globallogic.users.model.User;
 import com.globallogic.users.service.UserService;
@@ -36,25 +37,25 @@ public class UsersController {
 	UserService service;
 
 	@PostMapping(value = "/", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public ResponseEntity<Object> add(@Validated @RequestBody User user) {
+	public ResponseEntity<Object> add(@Validated @RequestBody User user) throws GLogicException {
 		return ResponseEntity.ok(service.add(user));
 
 	}
 
 	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public Optional<UserEntity> get(@PathVariable Integer id) {
+	public Optional<UserEntity> get(@PathVariable Integer id) throws GLogicException {
 		return service.get(id);
 
 	}
 
 	@GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public List<UserEntity> getAll() {
+	public List<UserEntity> getAll() throws GLogicException {
 		return service.getAll();
 
 	}
 
 	@PutMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public ResponseEntity<Object> update(@RequestBody User user, @PathVariable Integer id) {
+	public ResponseEntity<Object> update(@RequestBody User user, @PathVariable Integer id) throws GLogicException {
 		Optional<UserEntity> opUser = service.update(user, id);
 		if (!opUser.isPresent()) {
 			return ResponseEntity.notFound().build();
@@ -64,7 +65,7 @@ public class UsersController {
 	}
 
 	@DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public ResponseEntity<Response> delete(@PathVariable Integer id) {
+	public ResponseEntity<Response> delete(@PathVariable Integer id) throws GLogicException {
 
 		if (service.delete(id)) {
 			return ResponseEntity.ok().body(Response.builder().message("User was deleted").build());
